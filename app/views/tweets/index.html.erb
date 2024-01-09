@@ -1,0 +1,38 @@
+<h1>Tweets#index</h1>
+<%= form_for @tweet do |f| %>
+    <%= f.label :タスク名 %>
+    <%= f.text_field :title, :size => 40 %></br>
+    <%= f.label :締切 %>
+    <%= f.date_field :time, :size => 140 %>
+<%= f.submit "tweetする" %>
+<% end %>
+
+<div class="tweet-container"%>
+  <div class="item"%>
+    <h1>タスク一覧</h1>
+    <% @tweets.each do |t| %>
+      <div class="tweet">
+      <%if (t.time - @today).to_i > -1 %>
+        タスク名:<b><%= t.title %></b></br>
+        締切:<%= t.time %></br>
+        残り:<%= t.time - @today).to_i %>日</br>
+        <%= button_to 'Done', done_path(t.id), method: :post %></br></br>
+    <% else %>
+      <b><%= t.title %></b></br>
+      締切:<%= t.time %>
+      <%= (t.time - @today).to_i * -1 %>日期限が経過しています😊</br>
+      <%= button_to 'Done', done_path(t.id), method: :post %></br></br>
+    <% end %>
+    </div>
+  <% end %>
+</div>
+<div class="item"%>
+<h1>完了したタスク</h1>
+    <% @tweets?done.each do |t| %>
+     <div class="tweet">
+       タスク名:<b><%= t.title %></b></br>
+       完了日:<%= t.done_at.strftime('%Y-%m-%d') %></br></br>
+    </div>
+    <% end %>
+</div>
+</div>
